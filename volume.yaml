@@ -1,0 +1,20 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: gcp-storage-class
+provisioner: pd.csi.storage.gke.io
+parameters:
+  type: pd-standard
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: jenkins-pv-claim
+  namespace: nsp-jenkins-gke
+spec:
+  storageClassName: gcp-storage-class
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 3Gi
